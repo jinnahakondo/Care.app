@@ -31,5 +31,5 @@ const serviceSchema = new mongoose.Schema({
         default: true
     }
 });
-const serviceModel = mongoose.model.services || mongoose.model("services", serviceSchema);
+const serviceModel = mongoose.models.services || mongoose.model("services", serviceSchema);
 export default serviceModel;
