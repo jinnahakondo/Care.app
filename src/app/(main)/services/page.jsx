@@ -11,8 +11,6 @@ export const metadata = {
 export default async function ServicesExplorePage() {
   const services = await getServices();
 
-  // const services = await serviceModel.find();
-
   return (
     <div className="bg-[#f6f7f8] text-slate-900">
       {/* Search hero */}

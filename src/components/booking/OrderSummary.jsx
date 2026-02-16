@@ -3,13 +3,10 @@ import {
   MdVerifiedUser,
   MdLock,
   MdEventBusy,
-  MdPayments,
-  MdCreditCard,
-  MdAccountBalanceWallet,
   MdChevronRight,
 } from "react-icons/md";
 
-export default function OrderSummary() {
+export default function OrderSummary({ service }) {
   return (
     <aside className="sticky top-24 space-y-6">
       {/* Order Summary Card */}
@@ -38,13 +35,13 @@ export default function OrderSummary() {
               <span className="text-slate-500 dark:text-slate-400">
                 Base Rate ($15/hr x 4)
               </span>
-              <span className="font-semibold">$60.00</span>
+              <span className="font-semibold">{service?.pricePerHour}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-slate-500 dark:text-slate-400">
                 Service Fee (5%)
               </span>
-              <span className="font-semibold">$3.00</span>
+              <span className="font-semibold">$0.00</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-slate-500 dark:text-slate-400">
@@ -59,7 +56,7 @@ export default function OrderSummary() {
               <span className="text-lg font-bold">Total Cost</span>
               <div className="text-right">
                 <span className="text-2xl font-extrabold text-[#2b9dee]">
-                  $63.00
+                  ${service?.pricePerHour}
                 </span>
                 <p className="text-[10px] font-medium text-slate-400">
                   All taxes included
@@ -99,7 +96,7 @@ export default function OrderSummary() {
           <MdEventBusy className="text-base" />
           <span>Free cancellation up to 24h before</span>
         </div>
-        <div className="mt-4 border-t border-slate-200 pt-4 dark:border-slate-800">
+        {/* <div className="mt-4 border-t border-slate-200 pt-4 dark:border-slate-800">
           <p className="mb-2 text-center text-[10px] font-bold uppercase tracking-widest text-slate-400">
             We Accept
           </p>
@@ -108,7 +105,7 @@ export default function OrderSummary() {
             <MdCreditCard className="text-2xl" />
             <MdAccountBalanceWallet className="text-2xl" />
           </div>
-        </div>
+        </div> */}
       </div>
     </aside>
   );

@@ -1,5 +1,4 @@
 import {
-  MdStar,
   MdVerifiedUser,
   MdVolunteerActivism,
   MdHealthAndSafety,
@@ -8,27 +7,20 @@ import {
   MdCalendarToday,
 } from "react-icons/md";
 import Link from "next/link";
-import serviceModel from "@/lib/mongoose/models/ServiceSchema";
-import dbConnect from "@/lib/mongoose/database/dbConnect";
 import Image from "next/image";
+import { getSingleService } from "@/lib/api/services";
 
 export default async function ServiceDetails({ params }) {
   const { id } = await params;
-  await dbConnect();
-  const service = await serviceModel.findOne({ _id: id });
 
+  const service =await getSingleService(id);
+ 
   if (!service) {
     return <p>Service not found.</p>;
   }
 
-  const {
-    serviceName,
-    category,
-    description,
-    pricePerHour,
-    pricePerDay,
-    image,
-  } = service;
+  const { serviceName, _id, description, pricePerHour, pricePerDay, image } =
+    service;
 
   return (
     <main className="bg-slate-50 pb-16 pt-6 md:pb-24 md:pt-10">
@@ -200,17 +192,20 @@ export default async function ServiceDetails({ params }) {
               </dl>
 
               <div className="mt-5 space-y-2">
-                <button className="btn btn-primary w-full justify-between rounded-lg">
+                <Link
+                  href={`/booking?serviceId=${_id}`}
+                  className="btn btn-primary w-full justify-between rounded-lg"
+                >
                   <span>Book Service</span>
                   <MdCalendarToday className="text-lg" />
-                </button>
-                <button className="btn btn-outline btn-primary w-full rounded-lg">
+                </Link>
+                {/* <button className="btn btn-outline btn-primary w-full rounded-lg">
                   Free Consultation
-                </button>
+                </button> */}
               </div>
 
               <div className="mt-4 flex items-start gap-2 rounded-lg border border-slate-100 bg-slate-50 px-3 py-2 text-xs text-slate-600">
-                <span className="mt-[2px] text-slate-500">
+                <span className="mt-0.5 text-slate-500">
                   <MdSecurity />
                 </span>
                 <span>Secure payments and 100% Satisfaction Guarantee.</span>

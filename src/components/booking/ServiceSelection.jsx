@@ -6,7 +6,7 @@ const services = [
   { icon: MdSick, label: "Sick Care", value: "sick" },
 ];
 
-export default function ServiceSelection() {
+export default function ServiceSelection({ setBookingInfo }) {
   return (
     <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
       <h2 className="mb-6 flex items-center gap-2 text-lg font-bold">
@@ -23,6 +23,7 @@ export default function ServiceSelection() {
               className="group relative cursor-pointer"
             >
               <input
+                onChange={() => setBookingInfo(service.value)}
                 type="radio"
                 name="service"
                 value={service.value}
