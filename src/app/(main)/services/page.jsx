@@ -2,29 +2,16 @@ import ExploreSearchBar from "@/components/services/ExploreSearchBar";
 import ExploreFiltersSidebar from "@/components/services/ExploreFiltersSidebar";
 import ServiceCard from "@/components/services/ServiceCard";
 import ExplorePagination from "@/components/services/ExplorePagination";
-import serviceModel from "@/lib/mongoose/models/ServiceSchema";
-import dbConnect from "@/lib/mongoose/database/dbConnect";
-
-//fetch data
-// const getServices = async () => {
-//   try {
-//     const data = await fetch("http://localhost:3000/api/services");
-//     await data.json();
-//     console.log("form get service function-------", data);
-//   } catch (error) {
-//     throw new Error(error.message);
-//   }
-// };
+import { getServices } from "@/lib/api/services";
 
 export const metadata = {
   title: "Care.app - Explore Services",
 };
 
 export default async function ServicesExplorePage() {
-  // const services = await getServices();
-  await dbConnect();
-  const services = await serviceModel.find();
-  console.log("----------------------------------", services);
+  const services = await getServices();
+
+  // const services = await serviceModel.find();
 
   return (
     <div className="bg-[#f6f7f8] text-slate-900">

@@ -7,9 +7,9 @@ export default function LocationForm() {
       </h2>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <div className="space-y-2">
+        <div className="space-y-2 ">
           <label className="text-sm font-semibold">Division</label>
-          <select className="w-full rounded-lg border-slate-200 bg-white focus:border-[#2b9dee] focus:ring-[#2b9dee] dark:border-slate-700 dark:bg-slate-800">
+          <select className="w-full rounded-lg border-slate-200 bg-white focus:border-[#2b9dee] focus:ring-[#2b9dee] dark:border-slate-700 dark:bg-slate-800 p-3">
             <option>Select Division</option>
             <option selected>Dhaka</option>
             <option>Chittagong</option>
@@ -18,7 +18,7 @@ export default function LocationForm() {
 
         <div className="space-y-2">
           <label className="text-sm font-semibold">District</label>
-          <select className="w-full rounded-lg border-slate-200 bg-white focus:border-[#2b9dee] focus:ring-[#2b9dee] dark:border-slate-700 dark:bg-slate-800">
+          <select className="w-full rounded-lg border-slate-200 bg-white focus:border-[#2b9dee] focus:ring-[#2b9dee] dark:border-slate-700 dark:bg-slate-800 p-3">
             <option>Select District</option>
             <option selected>Dhaka North</option>
             <option>Dhaka South</option>
@@ -27,7 +27,7 @@ export default function LocationForm() {
 
         <div className="space-y-2">
           <label className="text-sm font-semibold">City / Municipality</label>
-          <select className="w-full rounded-lg border-slate-200 bg-white focus:border-[#2b9dee] focus:ring-[#2b9dee] dark:border-slate-700 dark:bg-slate-800">
+          <select className="p-3 w-full rounded-lg border-slate-200 bg-white focus:border-[#2b9dee] focus:ring-[#2b9dee] dark:border-slate-700 dark:bg-slate-800">
             <option>Select City</option>
             <option selected>Gulshan</option>
             <option>Banani</option>
@@ -36,7 +36,7 @@ export default function LocationForm() {
 
         <div className="space-y-2">
           <label className="text-sm font-semibold">Area / Neighborhood</label>
-          <select className="w-full rounded-lg border-slate-200 bg-white focus:border-[#2b9dee] focus:ring-[#2b9dee] dark:border-slate-700 dark:bg-slate-800">
+          <select className="p-3 w-full rounded-lg border-slate-200 bg-white focus:border-[#2b9dee] focus:ring-[#2b9dee] dark:border-slate-700 dark:bg-slate-800">
             <option>Select Area</option>
             <option selected>Block C</option>
             <option>Block D</option>
@@ -48,7 +48,7 @@ export default function LocationForm() {
             Detailed Address / Landmarks
           </label>
           <textarea
-            className="w-full rounded-lg border-slate-200 bg-white focus:border-[#2b9dee] focus:ring-[#2b9dee] dark:border-slate-700 dark:bg-slate-800"
+            className="p-3 w-full rounded-lg border-slate-200 bg-white focus:border-[#2b9dee] focus:ring-[#2b9dee] dark:border-slate-700 dark:bg-slate-800"
             placeholder="Flat No, House Name, Street Details, nearby landmarks..."
             rows="3"
           />

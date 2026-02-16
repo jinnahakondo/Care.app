@@ -1,9 +1,11 @@
 import Image from "next/image";
+import Link from "next/link";
 import { MdFavoriteBorder, MdStar, MdVerified } from "react-icons/md";
 
 // Single caregiver card used in the explore grid
 export default function ServiceCard({ service }) {
   const {
+    _id,
     serviceName,
     category,
     description,
@@ -47,26 +49,22 @@ export default function ServiceCard({ service }) {
               <span className="text-xs text-slate-500">Care.app</span>
             </div>
           </div>
-          <div className="text-right">
-          
-          </div>
+          <div className="text-right"></div>
         </div>
 
         <div className="mb-4 flex items-center gap-1">
           <MdStar className="text-sm text-amber-400" />
           <span className="text-sm font-bold text-slate-700">
-           4.7 (22 reviews)
+            4.7 (22 reviews)
           </span>
         </div>
 
-       
-
-        <button
-          type="button"
-          className="w-full rounded-lg bg-[#2b8cee1a] py-3 text-sm font-bold text-[#2b8cee] transition-all hover:bg-[#2b8cee] hover:text-white"
+        <Link
+          href={`/services/${_id}`}
+          className="btn w-full rounded-lg bg-[#2b8cee1a] py-3 text-sm font-bold text-[#2b8cee] transition-all hover:bg-[#2b8cee] hover:text-white"
         >
           View Details
-        </button>
+        </Link>
       </div>
     </div>
   );

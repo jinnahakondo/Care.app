@@ -8,8 +8,28 @@ import {
   MdCalendarToday,
 } from "react-icons/md";
 import Link from "next/link";
+import serviceModel from "@/lib/mongoose/models/ServiceSchema";
+import dbConnect from "@/lib/mongoose/database/dbConnect";
+import Image from "next/image";
 
-export default function ServiceDetails() {
+export default async function ServiceDetails({ params }) {
+  const { id } = await params;
+  await dbConnect();
+  const service = await serviceModel.findOne({ _id: id });
+
+  if (!service) {
+    return <p>Service not found.</p>;
+  }
+
+  const {
+    serviceName,
+    category,
+    description,
+    pricePerHour,
+    pricePerDay,
+    image,
+  } = service;
+
   return (
     <main className="bg-slate-50 pb-16 pt-6 md:pb-24 md:pt-10">
       <div className="mx-auto max-w-6xl px-4 lg:px-6">
@@ -26,13 +46,13 @@ export default function ServiceDetails() {
             </li>
             <li className="flex items-center gap-1">
               <span className="text-slate-400">/</span>
-              <Link href="/#services" className="hover:text-slate-700">
+              <Link href="/services" className="hover:text-slate-700">
                 Services
               </Link>
             </li>
             <li className="flex items-center gap-1 text-slate-900">
               <span className="text-slate-400">/</span>
-              <span>Elderly Care</span>
+              <span>{serviceName}</span>
             </li>
           </ol>
         </nav>
@@ -43,52 +63,23 @@ export default function ServiceDetails() {
             {/* Hero image card */}
             <section className="overflow-hidden rounded-xl bg-white shadow-md ring-1 ring-slate-100">
               <div className="relative h-64 w-full bg-slate-900 sm:h-72">
-                {/* Background image placeholder */}
-                <div className="absolute inset-0 bg-linear-to-tr from-slate-900 via-slate-800 to-slate-700">
-                  <div className="absolute -left-10 top-6 h-36 w-36 rounded-full bg-emerald-300/40 blur-3xl" />
-                  <div className="absolute -right-10 bottom-0 h-40 w-40 rounded-full bg-sky-300/40 blur-3xl" />
-                </div>
-
-                <div className="relative flex h-full flex-col justify-between p-5 sm:p-7">
-                  <div className="inline-flex w-max items-center rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-emerald-200 ring-1 ring-white/15">
-                    Premium Care
-                  </div>
-
-                  <div className="space-y-3">
-                    <h1 className="max-w-xl text-balance text-2xl font-semibold text-white sm:text-3xl md:text-4xl">
-                      Professional &amp; Compassionate Elderly Care
-                    </h1>
-
-                    <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm">
-                      <div className="flex items-center gap-1.5 text-amber-300">
-                        {Array.from({ length: 5 }).map((_, idx) => (
-                          <MdStar key={idx} />
-                        ))}
-                        <span className="ml-1 text-slate-100">
-                          4.9 (1.2k Reviews)
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1.5 text-emerald-200">
-                        <MdVerifiedUser className="text-base" />
-                        <span className="text-slate-100">Vetted Professionals</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <Image
+                  src={image}
+                  alt={serviceName}
+                  width={100}
+                  height={100}
+                  className="w-full h-full object-cover"
+                />
               </div>
             </section>
 
             {/* About this service */}
             <section className="space-y-4 rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-100">
               <h2 className="text-lg font-semibold text-slate-900">
-                About This Service
+                {serviceName}
               </h2>
               <p className="text-sm leading-relaxed text-slate-600">
-                We provide personalized in-home elderly care designed to help your
-                loved ones maintain their independence and quality of life. Our
-                professional caregivers are trained to provide both medical
-                assistance and emotional support, ensuring a holistic approach to
-                aging gracefully in the comfort of home.
+                {description}
               </p>
 
               <div className="mt-4 grid gap-3 md:grid-cols-2">
@@ -154,14 +145,19 @@ export default function ServiceDetails() {
               <div className="flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full bg-linear-to-tr from-emerald-300 to-sky-300 ring-2 ring-slate-800" />
                 <div>
-                  <p className="text-sm font-semibold text-white">Sarah Jenkins</p>
-                  <p className="text-xs text-slate-300">Verified Family Member</p>
+                  <p className="text-sm font-semibold text-white">
+                    Sarah Jenkins
+                  </p>
+                  <p className="text-xs text-slate-300">
+                    Verified Family Member
+                  </p>
                 </div>
               </div>
               <p className="text-sm leading-relaxed text-slate-100">
-                “Care.xyz provided a wonderful caregiver for my father. The peace of
-                mind knowing he is safe and happy while I&apos;m at work is
-                priceless. Their medication management system is top-notch.”
+                “Care.xyz provided a wonderful caregiver for my father. The
+                peace of mind knowing he is safe and happy while I&apos;m at
+                work is priceless. Their medication management system is
+                top-notch.”
               </p>
             </section>
           </div>
@@ -175,7 +171,15 @@ export default function ServiceDetails() {
                   Price starting at
                 </p>
                 <div className="mt-2 flex items-baseline gap-1">
-                  <span className="text-3xl font-semibold text-slate-900">$32</span>
+                  <span className="text-3xl font-semibold text-slate-900">
+                    ${pricePerDay}
+                  </span>
+                  <span className="text-sm text-slate-500">/day</span>
+                </div>
+                <div className="mt-2 flex items-baseline gap-1">
+                  <span className="text-3xl font-semibold text-slate-900">
+                    ${pricePerHour}
+                  </span>
                   <span className="text-sm text-slate-500">/hour</span>
                 </div>
               </div>
@@ -266,4 +270,3 @@ export default function ServiceDetails() {
     </main>
   );
 }
-

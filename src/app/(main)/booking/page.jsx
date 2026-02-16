@@ -13,7 +13,7 @@ export const metadata = {
 export default function BookingPage() {
   return (
     <div className="min-h-screen bg-[#f6f7f8] text-slate-800 dark:bg-[#101a22] dark:text-slate-100">
-      <BookingHeader />
+      {/* <BookingHeader /> */}
 
       <main className="mx-auto max-w-7xl px-4 py-8">
         {/* Stepper Component */}
