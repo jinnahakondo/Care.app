@@ -90,8 +90,8 @@ export default function Hero() {
           <div className="relative mx-auto max-w-sm rounded-3xl border border-slate-100 bg-white/80 p-3 shadow-xl backdrop-blur">
             <div className="relative h-72 w-full overflow-hidden rounded-2xl bg-linear-to-tr from-sky-200 via-sky-100 to-fuchsia-100">
               {/* Background illustrative block (you can replace with a real image later) */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.45),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(244,114,182,0.45),transparent_55%)]" />
-
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.45),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(244,114,182,0.45),transparent_55%)]"  />
+<img src="/hero_care.jpg" alt="" className="w-full object-cover scale-125 absolute top-5"/>
               {/* Caregiver profile overlay */}
               <div className="absolute inset-x-3 bottom-3 rounded-2xl bg-white/90 p-3 shadow-lg">
                 <div className="flex items-center gap-3">

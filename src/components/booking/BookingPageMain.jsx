@@ -1,15 +1,14 @@
 "use client";
-import OrderSummary from "./OrderSummary";
-import BookingForm from "./BookingForm";
 import { useState } from "react";
+import BookingForm from "./BookingForm";
+import OrderSummary from "./OrderSummary";
 
-export default function BookingPageMain({ service }) {
+
+export default function BookingMain({ service }) {
   const [bookingInfo, setBookingInfo] = useState({
-    userId: "",
-    serviceId: "",
-    serviceType:'child',
+    serviceType: "child",
     durationType: "hour",
-    durationValue: "",
+    bookingDate: "",
     location: {
       division: "",
       district: "",
@@ -17,26 +16,18 @@ export default function BookingPageMain({ service }) {
       area: "",
       address: "",
     },
-    totalCost: "",
-    status: "Pending",
-    bookingDate:'',
-
   });
-  console.log("booking info:", bookingInfo);
+
   return (
     <div className="min-h-screen bg-[#f6f7f8] text-slate-800 dark:bg-[#101a22] dark:text-slate-100">
       <main className="mx-auto max-w-7xl px-4 py-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Left Side: Form */}
-          <BookingForm setBookingInfo={setBookingInfo} />
-          {/* Right Side: Sidebar */}
-          <div className="lg:col-span-1">
-            <OrderSummary service={service} />
-          </div>
+          <BookingForm bookingInfo={bookingInfo} setBookingInfo={setBookingInfo} />
+          {/* Right Side: Order Summary */}
+          <OrderSummary bookingInfo={bookingInfo} service={service} />
         </div>
       </main>
-
-      {/* <BookingFooter /> */}
     </div>
   );
 }

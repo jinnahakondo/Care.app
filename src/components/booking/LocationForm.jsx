@@ -1,4 +1,14 @@
-export default function LocationForm() {
+export default function LocationForm({ bookingInfo, setBookingInfo }) {
+  const handleLocationChange = (field, value) => {
+    setBookingInfo({
+      ...bookingInfo,
+      location: {
+        ...bookingInfo.location,
+        [field]: value,
+      },
+    });
+  };
+
   return (
     <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
       <h2 className="mb-6 flex items-center gap-2 text-lg font-bold">
@@ -7,50 +17,71 @@ export default function LocationForm() {
       </h2>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <div className="space-y-2 ">
+        {/* Division */}
+        <div className="space-y-2">
           <label className="text-sm font-semibold">Division</label>
-          <select className="w-full rounded-lg border-slate-200 bg-white focus:border-[#2b9dee] focus:ring-[#2b9dee] dark:border-slate-700 dark:bg-slate-800 p-3">
-            <option>Select Division</option>
-            <option selected>Dhaka</option>
-            <option>Chittagong</option>
+          <select
+            value={bookingInfo.location.division}
+            onChange={(e) => handleLocationChange("division", e.target.value)}
+            className="w-full rounded-lg border-slate-200 bg-white p-3"
+          >
+            <option value="">Select Division</option>
+            <option value="dhaka">Dhaka</option>
+            <option value="chittagong">Chittagong</option>
           </select>
         </div>
 
+        {/* District */}
         <div className="space-y-2">
           <label className="text-sm font-semibold">District</label>
-          <select className="w-full rounded-lg border-slate-200 bg-white focus:border-[#2b9dee] focus:ring-[#2b9dee] dark:border-slate-700 dark:bg-slate-800 p-3">
-            <option>Select District</option>
-            <option selected>Dhaka North</option>
-            <option>Dhaka South</option>
+          <select
+            value={bookingInfo.location.district}
+            onChange={(e) => handleLocationChange("district", e.target.value)}
+            className="w-full rounded-lg border-slate-200 bg-white p-3"
+          >
+            <option value="">Select District</option>
+            <option value="dhaka-north">Dhaka North</option>
+            <option value="dhaka-south">Dhaka South</option>
           </select>
         </div>
 
+        {/* City */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold">City / Municipality</label>
-          <select className="p-3 w-full rounded-lg border-slate-200 bg-white focus:border-[#2b9dee] focus:ring-[#2b9dee] dark:border-slate-700 dark:bg-slate-800">
-            <option>Select City</option>
-            <option selected>Gulshan</option>
-            <option>Banani</option>
+          <label className="text-sm font-semibold">City</label>
+          <select
+            value={bookingInfo.location.city}
+            onChange={(e) => handleLocationChange("city", e.target.value)}
+            className="w-full rounded-lg border-slate-200 bg-white p-3"
+          >
+            <option value="">Select City</option>
+            <option value="gulshan">Gulshan</option>
+            <option value="banani">Banani</option>
           </select>
         </div>
 
+        {/* Area */}
         <div className="space-y-2">
-          <label className="text-sm font-semibold">Area / Neighborhood</label>
-          <select className="p-3 w-full rounded-lg border-slate-200 bg-white focus:border-[#2b9dee] focus:ring-[#2b9dee] dark:border-slate-700 dark:bg-slate-800">
-            <option>Select Area</option>
-            <option selected>Block C</option>
-            <option>Block D</option>
+          <label className="text-sm font-semibold">Area</label>
+          <select
+            value={bookingInfo.location.area}
+            onChange={(e) => handleLocationChange("area", e.target.value)}
+            className="w-full rounded-lg border-slate-200 bg-white p-3"
+          >
+            <option value="">Select Area</option>
+            <option value="block-c">Block C</option>
+            <option value="block-d">Block D</option>
           </select>
         </div>
 
+        {/* Address */}
         <div className="space-y-2 md:col-span-2">
-          <label className="text-sm font-semibold">
-            Detailed Address / Landmarks
-          </label>
+          <label className="text-sm font-semibold">Address</label>
           <textarea
-            className="p-3 w-full rounded-lg border-slate-200 bg-white focus:border-[#2b9dee] focus:ring-[#2b9dee] dark:border-slate-700 dark:bg-slate-800"
-            placeholder="Flat No, House Name, Street Details, nearby landmarks..."
+            value={bookingInfo.location.address}
+            onChange={(e) => handleLocationChange("address", e.target.value)}
             rows="3"
+            placeholder="Flat No, House Name, Street Details..."
+            className="w-full rounded-lg border-slate-200 bg-white p-3"
           />
         </div>
       </div>

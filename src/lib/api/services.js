@@ -1,9 +1,9 @@
 import dbConnect from "../mongoose/database/dbConnect";
 import serviceModel from "../mongoose/models/ServiceSchema";
 
-export const getServices = async (id) => {
+export const getServices = async () => {
     try {
-        const res = await fetch("http://localhost:3000/api/services");
+        const res = await fetch("https://care-zeta-ten.vercel.app/api/services");
         const data = await res.json();
         return data.result || [];
     } catch (error) {

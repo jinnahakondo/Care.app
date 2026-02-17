@@ -7,7 +7,7 @@ import { getServices } from "@/lib/api/services";
 export const metadata = {
   title: "Care.app - Explore Services",
 };
-
+export const dynamic = "force-dynamic";
 export default async function ServicesExplorePage() {
   const services = await getServices();
 
