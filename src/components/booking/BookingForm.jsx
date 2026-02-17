@@ -22,7 +22,7 @@ export default function BookingForm({ service }) {
   const totalCost = price + serviceFee;
 
   //booking submit function
-  const handelCareBooking = (e) => {
+  const handleCareBooking = (e) => {
     e.preventDefault();
     const form = e.target;
     const division = form.division.value;
@@ -30,14 +30,14 @@ export default function BookingForm({ service }) {
     const city = form.city.value;
     const area = form.area.value;
     const address = form.address.value;
-    const bookingDate = form.bookingDate.value;
-    const durationValue = form.durationValue.value;
+    const bookingDate = new Date(form.bookingDate.value);
+
     const newBooking = {
       userId: session?.userId,
       serviceId: serviceInfo._id,
       serviceType,
       durationType,
-      durationValue,
+      durationValue: Number(durationValue),
       bookingDate,
       location: { division, district, city, area, address },
       totalCost,
@@ -48,7 +48,7 @@ export default function BookingForm({ service }) {
   return (
     <section className="min-h-screen bg-base-200 p-6">
       <form
-        onSubmit={(e) => handelCareBooking(e)}
+        onSubmit={(e) => handleCareBooking(e)}
         className="mx-auto grid max-w-6xl grid-cols-1 gap-6 lg:grid-cols-3"
       >
         {/* LEFT SECTION */}
@@ -90,9 +90,15 @@ export default function BookingForm({ service }) {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* date */}
-                <input type="date" name="bookingDate" className="input" />
+                <input
+                  required
+                  type="date"
+                  name="bookingDate"
+                  className="input"
+                />
                 {/* duration value  */}
                 <select
+                  required
                   onChange={(e) => setDurationValue(e.target.value)}
                   name="durationValue"
                   className="select"
@@ -142,6 +148,7 @@ export default function BookingForm({ service }) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* division  */}
                 <select
+                  required
                   name="division"
                   className="select select-bordered w-full"
                 >
@@ -149,13 +156,18 @@ export default function BookingForm({ service }) {
                 </select>
                 {/* district */}
                 <select
+                  required
                   name="district"
                   className="select select-bordered w-full"
                 >
                   <option>Dhaka North</option>
                 </select>
                 {/* city */}
-                <select name="city" className="select select-bordered w-full">
+                <select
+                  required
+                  name="city"
+                  className="select select-bordered w-full"
+                >
                   <option>Gulshan</option>
                 </select>
                 {/* area  */}
@@ -165,6 +177,7 @@ export default function BookingForm({ service }) {
               </div>
 
               <textarea
+                required
                 name="address"
                 className="textarea textarea-bordered w-full"
                 placeholder="Flat No, House Name, Street Details, nearby landmarks..."
@@ -182,13 +195,15 @@ export default function BookingForm({ service }) {
             {/* Selected Service */}
             <div className="bg-base-200 rounded-lg p-4">
               <p className="text-xs text-gray-500">SERVICE SELECTED</p>
-              <p className="font-medium">Child Care (Hourly)</p>
+              <p className="font-medium">
+                Child Care ( {durationType === "hour" ? "Hourly" : "Daily"})
+              </p>
             </div>
 
             {/* Pricing */}
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span>Base Rate ($15/hr x 4)</span>
+                <span>Base Rate</span>
                 <span>${price.toFixed(2)}</span>
               </div>
 
