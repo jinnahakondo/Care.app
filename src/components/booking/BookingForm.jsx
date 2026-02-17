@@ -25,7 +25,7 @@ export default function BookingForm({ service }) {
   //booking submit function
   const handleCareBooking = async (e) => {
     if (!userId) {
-      alert("please login first");
+      return alert("please login first");
     }
     e.preventDefault();
     const form = e.target;
