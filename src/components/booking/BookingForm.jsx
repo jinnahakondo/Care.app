@@ -12,6 +12,7 @@ export default function BookingForm({ service }) {
   const [durationValue, setDurationValue] = useState(1);
 
   const { data: session } = useSession();
+  const userId = session?.userId;
 
   //price calculation
   const price =
@@ -22,7 +23,10 @@ export default function BookingForm({ service }) {
   const totalCost = price + serviceFee;
 
   //booking submit function
-  const handleCareBooking = (e) => {
+  const handleCareBooking = async (e) => {
+    if (!userId) {
+      alert("please login first");
+    }
     e.preventDefault();
     const form = e.target;
     const division = form.division.value;
@@ -33,17 +37,26 @@ export default function BookingForm({ service }) {
     const bookingDate = new Date(form.bookingDate.value);
 
     const newBooking = {
-      userId: session?.userId,
-      serviceId: serviceInfo._id,
+      userId: String(userId),
+      serviceId: String(serviceInfo._id),
       serviceType,
       durationType,
       durationValue: Number(durationValue),
+      totalCost,
       bookingDate,
       location: { division, district, city, area, address },
-      totalCost,
     };
-    console.log(newBooking);
-    // console.log("click");
+
+    try {
+      const res = await fetch("http://localhost:3000/api/bookings", {
+        method: "POST",
+        body: JSON.stringify(newBooking),
+      });
+      alert("success");
+      console.log(res);
+    } catch (error) {
+      alert(error.message);
+    }
   };
   return (
     <section className="min-h-screen bg-base-200 p-6">
