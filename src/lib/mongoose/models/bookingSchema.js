@@ -60,7 +60,6 @@ const bookingSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
-});
-const bookingModel = mongoose.models.bookings || mongoose.model("booking", bookingSchema);
-
+}, { timestamps: true });
+const bookingModel = mongoose.models.Booking || mongoose.model("Booking", bookingSchema);
 export default bookingModel;

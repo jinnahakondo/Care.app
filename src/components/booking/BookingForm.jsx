@@ -1,11 +1,56 @@
+"use client";
 import { FaChild, FaUserAlt, FaUserInjured } from "react-icons/fa";
 import { MdLocationOn, MdVerified } from "react-icons/md";
 import { IoShieldCheckmark } from "react-icons/io5";
+import { useState } from "react";
+import { useSession } from "next-auth/react";
 
-export default function BookingForm() {
+export default function BookingForm({ service }) {
+  const serviceInfo = JSON.parse(service);
+  const [serviceType, setServiceType] = useState("child");
+  const [durationType, setDurationType] = useState("hour");
+  const [durationValue, setDurationValue] = useState(1);
+
+  const { data: session } = useSession();
+
+  //price calculation
+  const price =
+    durationType === "hour"
+      ? serviceInfo?.pricePerHour * Number(durationValue)
+      : serviceInfo?.pricePerDay * Number(durationValue);
+  const serviceFee = (price / 100) * 5;
+  const totalCost = price + serviceFee;
+
+  //booking submit function
+  const handelCareBooking = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const division = form.division.value;
+    const district = form.district.value;
+    const city = form.city.value;
+    const area = form.area.value;
+    const address = form.address.value;
+    const bookingDate = form.bookingDate.value;
+    const durationValue = form.durationValue.value;
+    const newBooking = {
+      userId: session?.userId,
+      serviceId: serviceInfo._id,
+      serviceType,
+      durationType,
+      durationValue,
+      bookingDate,
+      location: { division, district, city, area, address },
+      totalCost,
+    };
+    console.log(newBooking);
+    // console.log("click");
+  };
   return (
-    <div className="min-h-screen bg-base-200 p-6">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 lg:grid-cols-3">
+    <section className="min-h-screen bg-base-200 p-6">
+      <form
+        onSubmit={(e) => handelCareBooking(e)}
+        className="mx-auto grid max-w-6xl grid-cols-1 gap-6 lg:grid-cols-3"
+      >
         {/* LEFT SECTION */}
         <div className="space-y-6 lg:col-span-2">
           {/* Service Type */}
@@ -13,38 +58,72 @@ export default function BookingForm() {
             <div className="card-body space-y-6">
               <h2 className="flex items-center gap-2 font-semibold text-lg">
                 <span className="text-primary">+</span>
-                Service Type & Duration
+                Service Type & durationType
               </h2>
 
               {/* Service Type Buttons */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="border-2 border-primary bg-primary/10 rounded-xl p-6 text-center cursor-pointer transition">
+                <div
+                  onClick={() => setServiceType("child")}
+                  className={`${serviceType === "child" && "border-2 border-primary bg-primary/10"} border border-base-300 rounded-xl p-6 text-center hover:border-primary cursor-pointer transition`}
+                >
                   <FaChild className="mx-auto text-2xl text-primary mb-2" />
                   <p className="font-medium">Child Care</p>
                 </div>
 
-                <div className="border border-base-300 rounded-xl p-6 text-center hover:border-primary cursor-pointer transition">
+                <div
+                  onClick={() => setServiceType("elderly")}
+                  className={`${serviceType === "elderly" && "border-2 border-primary bg-primary/10"} border border-base-300 rounded-xl p-6 text-center hover:border-primary cursor-pointer transition`}
+                >
                   <FaUserAlt className="mx-auto text-2xl text-gray-500 mb-2" />
                   <p className="font-medium text-gray-600">Elderly Care</p>
                 </div>
 
-                <div className="border border-base-300 rounded-xl p-6 text-center hover:border-primary cursor-pointer transition">
+                <div
+                  onClick={() => setServiceType("sick")}
+                  className={`${serviceType === "sick" && "border-2 border-primary bg-primary/10"} border border-base-300 rounded-xl p-6 text-center hover:border-primary cursor-pointer transition`}
+                >
                   <FaUserInjured className="mx-auto text-2xl text-gray-500 mb-2" />
                   <p className="font-medium text-gray-600">Sick Care</p>
                 </div>
               </div>
 
-              {/* Duration */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* date */}
+                <input type="date" name="bookingDate" className="input" />
+                {/* duration value  */}
+                <select
+                  onChange={(e) => setDurationValue(e.target.value)}
+                  name="durationValue"
+                  className="select"
+                >
+                  <option value="">select care duration</option>
+                  <option value="1">1 Day</option>
+                  <option value="7">7 Days</option>
+                  <option value="15">15 Days</option>
+                  <option value="30">30 Days</option>
+                </select>
+              </div>
+
+              {/* durationType */}
               <div>
                 <p className="text-sm font-medium mb-2">
-                  Service Duration Mode
+                  Service durationType Mode
                 </p>
 
                 <div className="join">
-                  <button className="join-item btn btn-sm btn-primary">
+                  <button
+                    type="button"
+                    onClick={() => setDurationType("hour")}
+                    className={`join-item btn btn-sm ${durationType === "hour" ? "btn-primary" : "btn-outline"}`}
+                  >
                     Hourly
                   </button>
-                  <button className="join-item btn btn-sm btn-outline">
+                  <button
+                    type="button"
+                    onClick={() => setDurationType("day")}
+                    className={`join-item btn btn-sm ${durationType === "day" ? "btn-primary" : "btn-outline"}`}
+                  >
                     Daily
                   </button>
                 </div>
@@ -61,24 +140,32 @@ export default function BookingForm() {
               </h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <select className="select select-bordered w-full">
+                {/* division  */}
+                <select
+                  name="division"
+                  className="select select-bordered w-full"
+                >
                   <option>Dhaka</option>
                 </select>
-
-                <select className="select select-bordered w-full">
+                {/* district */}
+                <select
+                  name="district"
+                  className="select select-bordered w-full"
+                >
                   <option>Dhaka North</option>
                 </select>
-
-                <select className="select select-bordered w-full">
+                {/* city */}
+                <select name="city" className="select select-bordered w-full">
                   <option>Gulshan</option>
                 </select>
-
-                <select className="select select-bordered w-full">
+                {/* area  */}
+                <select name="area" className="select select-bordered w-full">
                   <option>Block C</option>
                 </select>
               </div>
 
               <textarea
+                name="address"
                 className="textarea textarea-bordered w-full"
                 placeholder="Flat No, House Name, Street Details, nearby landmarks..."
                 rows="3"
@@ -102,12 +189,12 @@ export default function BookingForm() {
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span>Base Rate ($15/hr x 4)</span>
-                <span>$60.00</span>
+                <span>${price.toFixed(2)}</span>
               </div>
 
               <div className="flex justify-between">
                 <span>Service Fee (5%)</span>
-                <span>$3.00</span>
+                <span>${serviceFee.toFixed(2)}</span>
               </div>
 
               <div className="flex justify-between">
@@ -121,11 +208,13 @@ export default function BookingForm() {
             {/* Total */}
             <div className="flex justify-between items-center">
               <span className="font-semibold">Total Cost</span>
-              <span className="text-primary text-xl font-bold">$63.00</span>
+              <span className="text-primary text-xl font-bold">
+                ${totalCost.toFixed(2)}
+              </span>
             </div>
 
             {/* Button */}
-            <button className="btn btn-primary w-full">
+            <button type="submit" className="btn btn-primary w-full">
               Confirm Booking →
             </button>
 
@@ -144,7 +233,7 @@ export default function BookingForm() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </form>
+    </section>
   );
 }

@@ -18,13 +18,15 @@ export const authOptions = {
     },
     async session({ session, token }) {
       if (token) {
-        session.user.role = token.role
+        session.user.role = token.role;
+        session.userId = token.userId;
       }
       return session
     },
-    async jwt({ token, user}) {
+    async jwt({ token, user }) {
       if (user) {
-        token.role = user.role
+        token.role = user.role;
+        token.userId = user._id;
       }
       return token
     }
