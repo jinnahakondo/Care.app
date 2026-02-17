@@ -48,7 +48,7 @@ export default function BookingForm({ service }) {
     };
 
     try {
-      const res = await fetch("http://localhost:3000/api/bookings", {
+      const res = await fetch("https://care-zeta-ten.vercel.app/api/bookings", {
         method: "POST",
         body: JSON.stringify(newBooking),
       });
