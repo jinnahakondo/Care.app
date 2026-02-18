@@ -4,7 +4,6 @@ import Logo from "./Logo/Logo";
 import NavLink from "./Links/NavLink/NavLink";
 import Link from "next/link";
 
-
 export default function Navbar() {
   const session = useSession();
   console.log(session);
@@ -13,7 +12,7 @@ export default function Navbar() {
       <NavLink href="/">Home</NavLink>
       <NavLink href="/services">Services </NavLink>
       <NavLink href="/about">About </NavLink>
-      <NavLink href="/dashboard">dashboard</NavLink>
+      <NavLink href="/dashboard/my-bookings">My Bookings</NavLink>
       {session.status === "authenticated" ? (
         <>
           <button

@@ -1,11 +1,14 @@
-import { credentialsProvider } from "./Provider/AuthProvider/AuthProvider";
-
-
+import { credentialsProvider, } from "./Provider/AuthProvider/AuthProvider";
+import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions = {
 
   providers: [
-    credentialsProvider
+    credentialsProvider,
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+    })
   ],
 
 

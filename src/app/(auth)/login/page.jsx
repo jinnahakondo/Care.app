@@ -1,66 +1,100 @@
 "use client";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function Login() {
   const router = useRouter();
+
   const handelLogin = async (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+
     const res = await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
+
     if (res.ok) {
       router.push("/");
     } else {
       alert("invalid credintials");
     }
   };
+
   return (
-    <div className="h-screen">
-      <div className="hero bg-base-200 min-h-screen">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Login now!</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
-            </p>
-          </div>
-          <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-            <div className="card-body">
-              <form onSubmit={(e) => handelLogin(e)} className="fieldset">
-                {/* email  */}
-                <div>
-                  <label className="label">Email</label>
-                  <input
-                    type="email"
-                    name="email"
-                    className="input"
-                    placeholder="Email"
-                  />
-                </div>
-                {/* password  */}
-                <div>
-                  <label className="label">Password</label>
-                  <input
-                    type="password"
-                    name="password"
-                    className="input"
-                    placeholder="Password"
-                  />
-                </div>
-                <button className="btn btn-neutral mt-4">Login</button>
-              </form>
-              <Link href={"/register"} className="text-blue-500">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-100 via-blue-50 to-white px-4">
+      <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-10 items-center">
+        {/* Left Side Text */}
+        <div className="text-center lg:text-left space-y-6">
+          <h1 className="text-4xl lg:text-5xl font-bold text-gray-800 leading-tight">
+            Welcome Back
+          </h1>
+
+          <p className="text-gray-500 max-w-md">
+            Login to access your dashboard and manage everything easily and
+            securely.
+          </p>
+        </div>
+
+        {/* Login Card */}
+        <div className="w-full">
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
+              Login Account
+            </h2>
+
+            <form onSubmit={(e) => handelLogin(e)} className="space-y-5">
+              {/* Email */}
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-600">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
+                />
+              </div>
+
+              {/* Password */}
+              <div className="space-y-1">
+                <label className="text-sm font-medium text-gray-600">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
+                />
+              </div>
+
+              {/* Button */}
+              <button className="w-full py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition duration-200">
+                Login
+              </button>
+            </form>
+            <button
+              onClick={() => signIn("google", { redirect: false })}
+              type="button"
+              className="mt-5 w-full flex items-center justify-center gap-3 py-2.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition font-medium"
+            >
+              Google
+            </button>
+            {/* Register Link */}
+            <p className="text-center text-sm text-gray-500 mt-6">
+              Don’t have an account?{" "}
+              <Link
+                href="/register"
+                className="text-blue-600 font-medium hover:underline"
+              >
                 Create Account
               </Link>
-            </div>
+            </p>
           </div>
         </div>
       </div>
