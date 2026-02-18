@@ -1,3 +1,4 @@
+"use client";
 import {
   MdDashboard,
   MdEventAvailable,
@@ -5,41 +6,37 @@ import {
   MdChatBubbleOutline,
   MdPayments,
   MdSettings,
-  MdFavorite,
 } from "react-icons/md";
-import Link from "next/link";
-import Logo  from "@/components/Logo/Logo";
+
+import Logo from "@/components/Logo/Logo";
+import { useSession } from "next-auth/react";
+import DashBoardLink from "../Links/DashBordLinks/DashBoardLink";
 
 const navLinks = [
   { icon: MdDashboard, label: "Overview", href: "/dashboard", active: true },
-  { icon: MdEventAvailable, label: "Bookings", href: "#" },
+  { icon: MdEventAvailable, label: "Bookings", href: "/dashboard/my-bookings" },
   { icon: MdPeopleOutline, label: "Caregivers", href: "#" },
   { icon: MdChatBubbleOutline, label: "Messages", href: "#" },
   { icon: MdPayments, label: "Billing", href: "#" },
 ];
 
 export default function DashboardNavSidebar() {
+  const { data: session, status } = useSession();
+  const role = session.user.role;
+
   return (
     <aside className="fixed flex h-full w-64 flex-col border-r border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
       {/* Brand */}
-    <a href='/'>
- <Logo/>
-    </a>
+      <div>
+        <Logo />
+      </div>
       {/* Navigation */}
       <nav className="mt-4 flex-1 space-y-1 px-4">
-        {navLinks.map(({ icon: Icon, label, href, active }) => (
-          <Link
-            key={label}
-            href={href}
-            className={`flex items-center gap-3 rounded-lg px-4 py-3 transition-colors ${
-              active
-                ? "bg-[#308ce8]/10 font-semibold text-[#308ce8]"
-                : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
-            }`}
-          >
+        {navLinks.map(({ icon: Icon, label, href }) => (
+          <DashBoardLink key={label} href={href}>
             <Icon className="text-xl" />
             <span>{label}</span>
-          </Link>
+          </DashBoardLink>
         ))}
       </nav>
 

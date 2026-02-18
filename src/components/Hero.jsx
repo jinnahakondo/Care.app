@@ -1,5 +1,11 @@
-import { MdVerifiedUser, MdSupportAgent, MdStar, MdSecurity } from "react-icons/md";
+import {
+  MdVerifiedUser,
+  MdSupportAgent,
+  MdStar,
+  MdSecurity,
+} from "react-icons/md";
 import { FaArrowRightLong } from "react-icons/fa6";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -27,8 +33,8 @@ export default function Hero() {
               Loved Ones.
             </h1>
             <p className="max-w-xl text-balance text-base text-slate-600 sm:text-lg">
-              Connecting you with certified caregivers for children, seniors, and
-              specialized medical needs—right in your neighborhood.
+              Connecting you with certified caregivers for children, seniors,
+              and specialized medical needs—right in your neighborhood.
             </p>
           </div>
 
@@ -38,9 +44,12 @@ export default function Hero() {
               Find Caregiver
               <FaArrowRightLong className="text-sm" />
             </button>
-            <button className="btn btn-outline btn-primary w-full rounded-xl px-6 text-base font-semibold sm:w-auto">
+            <Link
+              href={"/services"}
+              className="btn btn-outline btn-primary w-full rounded-xl px-6 text-base font-semibold sm:w-auto"
+            >
               Book Service
-            </button>
+            </Link>
           </div>
 
           {/* Trust signals */}
@@ -53,7 +62,9 @@ export default function Hero() {
                 <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
                   Insured
                 </p>
-                <p className="text-sm font-semibold text-slate-800">Full coverage</p>
+                <p className="text-sm font-semibold text-slate-800">
+                  Full coverage
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -64,7 +75,9 @@ export default function Hero() {
                 <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
                   Support
                 </p>
-                <p className="text-sm font-semibold text-slate-800">24/7 assistance</p>
+                <p className="text-sm font-semibold text-slate-800">
+                  24/7 assistance
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
@@ -75,7 +88,9 @@ export default function Hero() {
                 <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
                   Rating
                 </p>
-                <p className="text-sm font-semibold text-slate-800">4.9/5 average</p>
+                <p className="text-sm font-semibold text-slate-800">
+                  4.9/5 average
+                </p>
               </div>
             </div>
           </div>
@@ -90,8 +105,12 @@ export default function Hero() {
           <div className="relative mx-auto max-w-sm rounded-3xl border border-slate-100 bg-white/80 p-3 shadow-xl backdrop-blur">
             <div className="relative h-72 w-full overflow-hidden rounded-2xl bg-linear-to-tr from-sky-200 via-sky-100 to-fuchsia-100">
               {/* Background illustrative block (you can replace with a real image later) */}
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.45),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(244,114,182,0.45),transparent_55%)]"  />
-<img src="/hero_care.jpg" alt="" className="w-full object-cover scale-125 absolute top-5"/>
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(59,130,246,0.45),transparent_55%),radial-gradient(circle_at_80%_80%,rgba(244,114,182,0.45),transparent_55%)]" />
+              <img
+                src="/hero_care.jpg"
+                alt=""
+                className="w-full object-cover scale-125 absolute top-5"
+              />
               {/* Caregiver profile overlay */}
               <div className="absolute inset-x-3 bottom-3 rounded-2xl bg-white/90 p-3 shadow-lg">
                 <div className="flex items-center gap-3">
@@ -119,4 +138,3 @@ export default function Hero() {
     </section>
   );
 }
-
